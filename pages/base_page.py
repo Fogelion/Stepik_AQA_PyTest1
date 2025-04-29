@@ -4,7 +4,7 @@ class BasePage():
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
-        #  конструктор BasePage добавим команду для неявного ожидания со значением по умолчанию в 10
+        # в конструктор BasePage добавим команду для неявного ожидания со значением по умолчанию в 10
         self.browser.implicitly_wait(timeout)
 
     def open(self):
