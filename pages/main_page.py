@@ -8,6 +8,7 @@ class MainPage(BasePage):
         # символ *, он указывает на то, что мы передали именно пару, и этот кортеж нужно распаковать
         login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
         login_link.click()
+        # return LoginPage(browser=self.browser, url=self.browser.current_url)
 
     # метод проверки ссылки на логин
     def should_be_login_link(self):
