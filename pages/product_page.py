@@ -18,19 +18,24 @@ class ProductPage(BasePage):
 
     def should_be_same_book_name(self):
         book_name = self.browser.find_element(*ProductPageLocators.BOOK_NAME)
-        print(f"Название книги: {book_name.text}")
+        # print(f"Название книги: {book_name.text}")
         book_name_add = self.browser.find_element(*ProductPageLocators.BOOK_NAME_ADD)
-        print(f"Название книги в корзине: {book_name_add.text}")
-        assert book_name.text == book_name_add.text, "Book name not equal to cart book name"
+        # print(f"Название книги в корзине: {book_name_add.text}")
+        assert book_name.text == book_name_add.text, f"Book name '{book_name.text}' not equal to cart book name '{book_name_add.text}'"
 
     def should_be_same_book_price(self):
         book_price_elem = self.browser.find_element(*ProductPageLocators.BOOK_PRICE)
         book_price = round(float(book_price_elem.text[1:]), 2)
-        print(f"Цена книги: £{book_price}")
-        ProductPage.total_books_price += book_price
+        # print(f"Цена книги: £{book_price}")
+        ProductPage.total_books_price += round(book_price, 2)
+        ProductPage.total_books_price = round(ProductPage.total_books_price, 2)
         print(f"Текущая сумма всех книг: £{ProductPage.total_books_price}")
         cart_price_elem = self.browser.find_element(*ProductPageLocators.CART_PRICE)
         cart_price = float(re.search(r'[\d,]+\.\d{2}', cart_price_elem.text).group())
         print(f"Стоимость корзины: £{cart_price}")
-        assert abs(cart_price - ProductPage.total_books_price) < 0.01, \
-                f"Cart price {cart_price} not equal to total books price {self.total_books_price}"
+        if abs(ProductPage.total_books_price - cart_price) > 0.01:
+            ProductPage.total_books_price -= book_price
+            assert False, f"Cart price {cart_price} not equal to total books price {ProductPage.total_books_price + book_price}"
+
+        # assert abs(cart_price - ProductPage.total_books_price) < 0.01, \
+        #         f"Cart price {cart_price} not equal to total books price {ProductPage.total_books_price}"

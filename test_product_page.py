@@ -26,4 +26,4 @@ def test_guest_can_add_product_to_cart(browser, link):
     product_page.should_be_cart_button()
     product_page.add_product_to_cart()
     product_page.should_be_same_book_name()
-    # product_page.should_be_same_book_price()
+    product_page.should_be_same_book_price()
