@@ -23,6 +23,7 @@ def test_guest_can_add_product_to_cart(browser, link):
 #     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer2"
     product_page = ProductPage(browser, link)
     product_page.open()
+    product_page.should_not_be_success_message()
     product_page.should_be_cart_button()
     product_page.add_product_to_cart()
     product_page.should_be_same_book_name()
